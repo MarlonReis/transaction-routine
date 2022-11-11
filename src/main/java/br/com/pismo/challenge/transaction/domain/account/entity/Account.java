@@ -94,4 +94,37 @@ public class Account implements Serializable {
     public Set<Transaction> getTransactions() {
         return transactions;
     }
+
+
+    protected void setId(UUID id) {
+        this.id = id;
+    }
+
+    protected void setAgency(String agency) {
+        this.agency = agency;
+    }
+
+    protected void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    protected void setCodeBank(String codeBank) {
+        this.codeBank = codeBank;
+    }
+
+    protected void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    protected void setAccountBalance(BigDecimal accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    protected void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    protected void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 }

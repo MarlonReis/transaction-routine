@@ -31,7 +31,7 @@ public class Customer {
     private String document;
 
     @OneToOne(mappedBy = "customer")
-    public Account account;
+    private Account account;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
@@ -70,4 +70,29 @@ public class Customer {
     public Set<Transaction> getTransactions() {
         return transactions;
     }
+
+    protected void setId(UUID id) {
+        this.id = id;
+    }
+
+    protected void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    protected void setDocument(String document) {
+        this.document = document;
+    }
+
+    protected void setAccount(Account account) {
+        this.account = account;
+    }
+
+    protected void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    protected void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
 }

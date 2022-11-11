@@ -96,10 +96,10 @@ public class Transaction {
 
     public void payment(BigDecimal value) {
         if (value == null) {
-            throw new PaymentException("payment value is required!");
+            throw PaymentException.createReceivedInvalidValue("payment value is required!");
         }
         if (value.signum() < 1) {
-            throw new PaymentException("payment value must be greater than zero!");
+            throw PaymentException.createReceivedInvalidValue("payment value must be greater than zero!");
         }
 
         this.value = value;
