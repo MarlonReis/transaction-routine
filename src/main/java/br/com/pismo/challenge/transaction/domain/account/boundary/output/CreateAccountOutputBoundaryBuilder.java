@@ -31,11 +31,6 @@ public final class CreateAccountOutputBoundaryBuilder {
         return this;
     }
 
-    public CreateAccountOutputBoundaryBuilder withNameBank(String nameBank) {
-        boundary.setNameBank(nameBank);
-        return this;
-    }
-
     public CreateAccountOutputBoundaryBuilder withCustomerName(String name) {
         boundary.setCustomerName(name);
         return this;

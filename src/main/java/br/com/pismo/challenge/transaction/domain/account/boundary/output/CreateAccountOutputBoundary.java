@@ -5,8 +5,6 @@ public class CreateAccountOutputBoundary {
     private String agency;
     private String accountNumber;
     private String codeBank;
-    private String nameBank;
-
     private String customerName;
 
     public String getCustomerId() {
@@ -23,10 +21,6 @@ public class CreateAccountOutputBoundary {
 
     public String getCodeBank() {
         return codeBank;
-    }
-
-    public String getNameBank() {
-        return nameBank;
     }
 
     public String getCustomerName() {
@@ -47,10 +41,6 @@ public class CreateAccountOutputBoundary {
 
     protected void setCodeBank(String codeBank) {
         this.codeBank = codeBank;
-    }
-
-    protected void setNameBank(String nameBank) {
-        this.nameBank = nameBank;
     }
 
     protected void setCustomerName(String customerName) {
