@@ -1,6 +1,7 @@
 package br.com.pismo.challenge.transaction.domain.exception;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public final class ExceptionData {
     private TypException code;
@@ -11,7 +12,7 @@ public final class ExceptionData {
     public ExceptionData(TypException code, String message) {
         this.code = code;
         this.message = message;
-        this.date = LocalDate.now().toString();
+        this.date = LocalDateTime.now().toString();
     }
 
     public TypException getCode() {
@@ -24,5 +25,14 @@ public final class ExceptionData {
 
     public String getDate() {
         return date;
+    }
+
+    @Override
+    public String toString() {
+        return "{ " +
+                "code:" + code +
+                ", message:'" + message + '\'' +
+                ", date:'" + date + '\'' +
+                " }";
     }
 }

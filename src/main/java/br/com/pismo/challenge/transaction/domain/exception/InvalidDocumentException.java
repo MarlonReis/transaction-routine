@@ -1,15 +1,13 @@
 package br.com.pismo.challenge.transaction.domain.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
-@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 public class InvalidDocumentException extends DomainException {
     public InvalidDocumentException(String message) {
-        super(TypException.DOCUMENT_IS_INVALID, message);
+        super(UNPROCESSABLE_ENTITY, TypException.DOCUMENT_IS_INVALID, message);
     }
 
     public InvalidDocumentException() {
-        super(TypException.DOCUMENT_IS_INVALID, "Document invalid!");
+        super(UNPROCESSABLE_ENTITY, TypException.DOCUMENT_IS_INVALID, "Document invalid!");
     }
 }
