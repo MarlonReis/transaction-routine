@@ -54,22 +54,22 @@ public class Transaction {
 
     public void purchaseTransaction(BigDecimal value, TransactionType type) {
         if (value == null) {
-            throw new PurchaseTransactionException("Purchase transaction value is required!");
+            throw PurchaseTransactionException.receiveInvalidValue("Purchase transaction value is required!");
         }
 
         if (value.signum() == -1) {
-            throw new PurchaseTransactionException("Purchase transaction value receive negative value!");
+            throw PurchaseTransactionException.receiveInvalidValue("Purchase transaction value receive negative value!");
         }
 
         if (value.signum() == 0) {
-            throw new PurchaseTransactionException("Purchase transaction value receive invalid value!");
+            throw PurchaseTransactionException.receiveInvalidValue("Purchase transaction value receive invalid value!");
         }
         if (type == null) {
-            throw new PurchaseTransactionException("Purchase transaction type is required!");
+            throw PurchaseTransactionException.receiveInvalidValue("Purchase transaction type is required!");
         }
 
         if (!type.isPurchaseTransaction()) {
-            throw new PurchaseTransactionException("Purchase transaction type '" + type.name() + "' is invalid!");
+            throw PurchaseTransactionException.receiveInvalidValue("Purchase transaction type '" + type.name() + "' is invalid!");
         }
 
         this.value = value.negate();
@@ -78,13 +78,13 @@ public class Transaction {
 
     public void withdrawMoney(BigDecimal value) {
         if (value == null) {
-            throw new WithdrawMoneyException("Withdraw money value is required!");
+            throw WithdrawMoneyException.receiveInvalidValue("Withdraw money value is required!");
         }
         if (value.signum() < 1) {
-            throw new WithdrawMoneyException("Withdraw money value must be greater than zero!");
+            throw WithdrawMoneyException.receiveInvalidValue("Withdraw money value must be greater than zero!");
         }
         if (value.toPlainString().matches(".+[1-9]+")) {
-            throw new WithdrawMoneyException("The withdrawal amount must be a whole number!");
+            throw WithdrawMoneyException.receiveInvalidValue("The withdrawal amount must be a whole number!");
         }
 
         this.value = value.negate();
@@ -93,10 +93,10 @@ public class Transaction {
 
     public void payment(BigDecimal value) {
         if (value == null) {
-            throw PaymentException.createReceivedInvalidValue("payment value is required!");
+            throw PaymentException.receivedInvalidValue("payment value is required!");
         }
         if (value.signum() < 1) {
-            throw PaymentException.createReceivedInvalidValue("payment value must be greater than zero!");
+            throw PaymentException.receivedInvalidValue("payment value must be greater than zero!");
         }
 
         this.value = value;

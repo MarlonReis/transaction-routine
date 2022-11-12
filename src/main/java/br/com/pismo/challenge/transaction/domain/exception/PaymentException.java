@@ -10,7 +10,7 @@ public class PaymentException extends DomainException {
         super(UNPROCESSABLE_ENTITY, type, message);
     }
 
-    public static PaymentException createReceivedInvalidValue(String message) {
+    public static PaymentException receivedInvalidValue(String message) {
         return new PaymentException(TypException.PAYMENT_RECEIVED_INVALID_VALUE, message);
     }
 }
