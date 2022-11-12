@@ -25,11 +25,4 @@ public class CreateAccountInputBoundary {
         return documentCpf;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setDocumentCpf(String documentCpf) {
-        this.documentCpf = documentCpf;
-    }
 }

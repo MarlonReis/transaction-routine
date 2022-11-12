@@ -3,12 +3,14 @@ package br.com.pismo.challenge.transaction.infraestructure.service;
 import br.com.pismo.challenge.transaction.domain.account.boundary.input.CreateAccountInputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.CreateAccountOutputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.CreateAccountOutputBoundaryBuilder;
+import br.com.pismo.challenge.transaction.domain.account.boundary.output.GetAccountOutputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.entity.Account;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
 import br.com.pismo.challenge.transaction.domain.account.service.GenerateCodeService;
 import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
 import br.com.pismo.challenge.transaction.domain.customer.value.object.DocumentCPF;
 import br.com.pismo.challenge.transaction.domain.exception.AccountException;
+import br.com.pismo.challenge.transaction.domain.shared.IdEntity;
 import br.com.pismo.challenge.transaction.repository.AccountRepository;
 import br.com.pismo.challenge.transaction.repository.CustomerRepository;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.SQLSyntaxErrorException;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImp implements AccountService {
@@ -40,7 +43,7 @@ public class AccountServiceImp implements AccountService {
     @Transactional()
     public CreateAccountOutputBoundary createAccount(CreateAccountInputBoundary boundary) {
         final var document = new DocumentCPF(boundary.getDocumentCpf());
-    
+
         try {
             if (customerRepository.existsByDocument(document.value())) {
                 logger.info("Customer cannot create account because the document is being used: document: {}", document.value());
@@ -64,5 +67,14 @@ public class AccountServiceImp implements AccountService {
             logger.error("Error when trying create an account: exception: {}, message:{}", ex.getCause(), ex.getMessage());
             throw AccountException.cannotCreateAccount("Unable to create an account at this time. Try later!");
         }
+    }
+
+    @Override
+    public GetAccountOutputBoundary getAccountById(IdEntity id) {
+        final var account = accountRepository.findById(id.value()).
+                map(it -> new GetAccountOutputBoundary(it.getId().toString(), it.getCustomer().getId().toString()));
+
+        return account.orElseThrow(() -> AccountException.accountNotFound("Account register cannot be found!"));
+
     }
 }
