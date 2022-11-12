@@ -24,6 +24,11 @@ public final class AccountBuilder {
         return this;
     }
 
+    public AccountBuilder withId(String id) {
+        account.setId(UUID.fromString(id));
+        return this;
+    }
+
     public AccountBuilder withAgency(String agency) {
         account.setAgency(agency);
         return this;

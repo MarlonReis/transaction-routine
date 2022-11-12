@@ -20,7 +20,7 @@ class TransactionTest {
 
     @BeforeEach
     public void setUp() {
-        transaction = new Transaction(new Customer());
+        transaction = new Transaction();
     }
 
     @ParameterizedTest
@@ -81,7 +81,6 @@ class TransactionTest {
         assertThat(exception.getData().getCode(), Matchers.is(TypException.PURCHASE_TRANSACTION_RECEIVED_INVALID_DATA));
         assertThat(exception.getData().getMessage(), Matchers.is("Purchase transaction type is required!"));
     }
-
 
 
     @Test

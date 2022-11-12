@@ -127,4 +127,17 @@ public class Account implements Serializable {
     protected void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", agency='" + agency + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", codeBank='" + codeBank + '\'' +
+                ", customer=" + customer +
+                ", accountBalance=" + accountBalance +
+                ", createAt=" + createAt +
+                '}';
+    }
 }

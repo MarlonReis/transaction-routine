@@ -1,7 +1,6 @@
 package br.com.pismo.challenge.transaction.domain.transaction.entity;
 
 import br.com.pismo.challenge.transaction.domain.account.entity.Account;
-import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
 import br.com.pismo.challenge.transaction.domain.exception.PaymentException;
 import br.com.pismo.challenge.transaction.domain.exception.PurchaseTransactionException;
 import br.com.pismo.challenge.transaction.domain.exception.WithdrawMoneyException;
@@ -37,22 +36,21 @@ public class Transaction {
     @Enumerated(EnumType.ORDINAL)
     private TransactionType type;
 
-    @ManyToOne()
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     public Account account;
 
 
-    public Transaction(Customer customer) {
-        this.customer = customer;
-        this.id = UUID.randomUUID();
-        this.createAt = new Date();
+    public Transaction(Account account) {
+        this.account = account;
     }
 
     public Transaction() {
+    }
+
+    @PrePersist
+    private void prePersist() {
+        this.createAt = new Date();
     }
 
     public void purchaseTransaction(BigDecimal value, TransactionType type) {
@@ -137,11 +135,19 @@ public class Transaction {
         return type;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
 
     public Account getAccount() {
         return account;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", createAt=" + createAt +
+                ", value=" + value +
+                ", type=" + type +
+                ", account=" + account +
+                '}';
     }
 }

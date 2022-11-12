@@ -2,13 +2,11 @@ package br.com.pismo.challenge.transaction.domain.customer.entity;
 
 import br.com.pismo.challenge.transaction.domain.account.entity.Account;
 import br.com.pismo.challenge.transaction.domain.customer.value.object.DocumentCPF;
-import br.com.pismo.challenge.transaction.domain.transaction.entity.Transaction;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -35,8 +33,6 @@ public class Customer {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
-    @OneToMany(mappedBy = "customer")
-    private Set<Transaction> transactions;
 
     public Customer() {
     }
@@ -67,9 +63,6 @@ public class Customer {
         return account;
     }
 
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
 
     protected void setId(UUID id) {
         this.id = id;
@@ -91,8 +84,5 @@ public class Customer {
         this.createAt = createAt;
     }
 
-    protected void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
 
 }

@@ -43,10 +43,6 @@ public final class CustomerBuilder {
         return this;
     }
 
-    public CustomerBuilder withTransactions(Set<Transaction> transactions) {
-        customer.setTransactions(transactions);
-        return this;
-    }
     
     public Customer build() {
         return customer;
