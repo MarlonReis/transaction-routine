@@ -72,7 +72,7 @@ public class AccountServiceImp implements AccountService {
     @Override
     public GetAccountOutputBoundary getAccountById(IdEntity id) {
         final var account = accountRepository.findById(id.value()).
-                map(it -> new GetAccountOutputBoundary(it.getId().toString(), it.getCustomer().getId().toString()));
+                map(it -> new GetAccountOutputBoundary(it.getId().toString(), it.getCustomer().getDocument()));
 
         return account.orElseThrow(() -> AccountException.accountNotFound("Account register cannot be found!"));
 

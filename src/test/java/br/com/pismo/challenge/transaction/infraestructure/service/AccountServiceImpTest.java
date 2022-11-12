@@ -126,7 +126,7 @@ class AccountServiceImpTest {
         var response = accountService.getAccountById(new IdEntity("91afc1d6-0f1e-4fb0-a3bb-ddc3b35f972c"));
 
         assertThat(response.getAccountId(), Matchers.is(account.getId().toString()));
-        assertThat(response.getDocumentNumber(), Matchers.is(account.getCustomer().getId().toString()));
+        assertThat(response.getDocumentNumber(), Matchers.is(account.getCustomer().getDocument()));
     }
 
     @Test
