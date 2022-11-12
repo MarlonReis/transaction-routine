@@ -4,10 +4,6 @@ public class GetAccountOutputBoundary {
     private String accountId;
     private String documentNumber;
 
-
-    public GetAccountOutputBoundary() {
-    }
-
     public GetAccountOutputBoundary(String accountId, String documentNumber) {
         this.accountId = accountId;
         this.documentNumber = documentNumber;

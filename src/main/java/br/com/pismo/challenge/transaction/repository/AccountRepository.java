@@ -4,7 +4,6 @@ import br.com.pismo.challenge.transaction.domain.account.entity.Account;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.UUID;
 
 @Repository
