@@ -26,8 +26,8 @@ public class AccountController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CreateAccountOutputBoundary> createAccount(@Valid @RequestBody CreateAccountInputBoundary data) {
-        var response = accountService.createAccount(data);
-        return ResponseEntity.ok(response);
+        accountService.createAccount(data);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/{accountId}", produces = MediaType.APPLICATION_JSON_VALUE)

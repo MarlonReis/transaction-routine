@@ -12,6 +12,7 @@ public enum TransactionType {
 
     private final int code;
 
+
     TransactionType(int code) {
         this.code = code;
     }
@@ -27,5 +28,11 @@ public enum TransactionType {
 
     public int getCode() {
         return code;
+    }
+
+
+    @Override
+    public String toString() {
+        return this.name();
     }
 }

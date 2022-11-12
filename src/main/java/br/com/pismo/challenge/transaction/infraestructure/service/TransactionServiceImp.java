@@ -1,25 +1,18 @@
 package br.com.pismo.challenge.transaction.infraestructure.service;
 
-import br.com.pismo.challenge.transaction.domain.account.entity.Account;
 import br.com.pismo.challenge.transaction.domain.account.entity.AccountBuilder;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
-import br.com.pismo.challenge.transaction.domain.exception.AccountException;
 import br.com.pismo.challenge.transaction.domain.shared.IdEntity;
 import br.com.pismo.challenge.transaction.domain.transaction.boundary.input.SaveTransactionInputBoundary;
 import br.com.pismo.challenge.transaction.domain.transaction.constant.TransactionType;
 import br.com.pismo.challenge.transaction.domain.transaction.entity.Transaction;
 import br.com.pismo.challenge.transaction.domain.transaction.service.TransactionService;
-import br.com.pismo.challenge.transaction.repository.AccountRepository;
 import br.com.pismo.challenge.transaction.repository.TransactionRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionServiceImp implements TransactionService {
-    private final Logger logger = LoggerFactory.getLogger(AccountServiceImp.class);
-
     private final TransactionRepository transactionRepository;
     private final AccountService accountService;
 

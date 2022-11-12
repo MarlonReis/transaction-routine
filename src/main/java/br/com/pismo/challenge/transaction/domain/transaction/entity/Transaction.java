@@ -18,7 +18,6 @@ import java.util.UUID;
 @Table(indexes = {
         @Index(name = "index_transaction_id", columnList = "id"),
         @Index(name = "index_transaction_create_at", columnList = "createAt"),
-        @Index(name = "index_transaction_customer_id", columnList = "customer_id"),
         @Index(name = "index_transaction_account_id", columnList = "account_id")
 }
 )

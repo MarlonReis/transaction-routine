@@ -26,13 +26,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.hamcrest.Matchers.matchesPattern;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -69,11 +64,7 @@ class AccountControllerTest {
 
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.customerId").value(notNullValue()))
-                .andExpect(jsonPath("$.agency").value(matchesPattern("[0-9]+")))
-                .andExpect(jsonPath("$.accountNumber").value(matchesPattern("[0-9]+")))
-                .andExpect(jsonPath("$.codeBank").value("758"))
-                .andExpect(jsonPath("$.customerName").value("Bertana de Tals"));
+                .andExpect(status().isOk());
     }
 
     @Test
