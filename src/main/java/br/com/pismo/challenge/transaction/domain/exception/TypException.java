@@ -6,5 +6,13 @@ public enum TypException {
     WITHDRAW_MONEY_RECEIVED_INVALID_VALUE,
     PAYMENT_RECEIVED_INVALID_VALUE,
     CANNOT_CREATE_ACCOUNT,
-    DOCUMENT_IS_BEING_USED_BY_ANOTHER_ACCOUNT
+    INTERNAL_ERROR_SERVER,
+    INVALID_REQUEST,
+    DOCUMENT_IS_BEING_USED_BY_ANOTHER_ACCOUNT;
+
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

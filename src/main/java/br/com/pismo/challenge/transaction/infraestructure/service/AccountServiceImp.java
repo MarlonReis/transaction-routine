@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.SQLSyntaxErrorException;
 
 @Service
 public class AccountServiceImp implements AccountService {
@@ -39,6 +40,7 @@ public class AccountServiceImp implements AccountService {
     @Transactional()
     public CreateAccountOutputBoundary createAccount(CreateAccountInputBoundary boundary) {
         final var document = new DocumentCPF(boundary.getDocumentCpf());
+    
         try {
             if (customerRepository.existsByDocument(document.value())) {
                 logger.info("Customer cannot create account because the document is being used: document: {}", document.value());
