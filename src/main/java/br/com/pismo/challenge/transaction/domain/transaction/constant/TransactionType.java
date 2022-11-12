@@ -1,5 +1,9 @@
 package br.com.pismo.challenge.transaction.domain.transaction.constant;
 
+import br.com.pismo.challenge.transaction.domain.exception.TransactionException;
+
+import java.util.stream.Stream;
+
 public enum TransactionType {
     CASH_PURCHASE(1),
     INSTALLMENT_PURCHASE(2),
@@ -14,6 +18,11 @@ public enum TransactionType {
 
     public boolean isPurchaseTransaction() {
         return this == CASH_PURCHASE || this == INSTALLMENT_PURCHASE;
+    }
+
+    public static TransactionType byCode(int code) {
+        return Stream.of(values()).filter(it -> it.getCode() == code).findFirst()
+                .orElseThrow(TransactionException::invalidTransaction);
     }
 
     public int getCode() {
