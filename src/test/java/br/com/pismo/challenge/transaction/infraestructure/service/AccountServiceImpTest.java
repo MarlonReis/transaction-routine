@@ -8,6 +8,7 @@ import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
 import br.com.pismo.challenge.transaction.domain.customer.entity.CustomerBuilder;
 import br.com.pismo.challenge.transaction.domain.exception.AccountException;
 import br.com.pismo.challenge.transaction.domain.exception.InvalidDocumentException;
+import br.com.pismo.challenge.transaction.domain.shared.IdEntity;
 import br.com.pismo.challenge.transaction.repository.AccountRepository;
 import br.com.pismo.challenge.transaction.repository.CustomerRepository;
 import org.hamcrest.Matchers;
@@ -20,9 +21,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
+
 import static br.com.pismo.challenge.transaction.domain.exception.TypException.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -53,10 +57,12 @@ class AccountServiceImpTest {
                 withId(UUID.randomUUID()).withDocument("73823594095").
                 withFullName("Fulano de Tals").build();
 
-        account = AccountBuilder.builder().withAccountNumber("000000").
-                withAgency("0000").withAccountBalance(BigDecimal.ZERO).
+        account = AccountBuilder.builder().
+                withAccountNumber("000000").
                 withCodeBank("00").withCreateAt(new Date()).
-                withId(UUID.randomUUID()).withCustomer(customer).
+                withCustomer(customer).
+                withAgency("0000").withAccountBalance(BigDecimal.ZERO).
+                withId(UUID.fromString("91afc1d6-0f1e-4fb0-a3bb-ddc3b35f972c")).
                 build();
 
     }
@@ -112,5 +118,26 @@ class AccountServiceImpTest {
         assertThat(exception.getData().getCode(), Matchers.is(CANNOT_CREATE_ACCOUNT));
     }
 
+    @Test
+    @DisplayName("should return account when find by id")
+    void shouldReturnAccountWhenFoundById() {
+        Mockito.when(accountRepository.findById(Mockito.any())).thenReturn(Optional.of(account));
+
+        var response = accountService.getAccountById(new IdEntity("91afc1d6-0f1e-4fb0-a3bb-ddc3b35f972c"));
+
+        assertThat(response.getAccountId(), Matchers.is(account.getId().toString()));
+        assertThat(response.getDocumentNumber(), Matchers.is(account.getCustomer().getId().toString()));
+    }
+
+    @Test
+    @DisplayName("should throws AccountException when account not found")
+    void shouldThrowAccountExceptionWhenAccountNotFoundById() {
+        Mockito.when(accountRepository.findById(Mockito.any())).thenReturn(Optional.empty());
+
+        var exception = assertThrows(AccountException.class, () -> accountService.
+                getAccountById(new IdEntity("91afc1d6-0f1e-4fb0-a3bb-ddc3b35f972c")));
+
+        assertThat(exception.getData().getCode(), Matchers.is(REGISTER_NOT_FOUND));
+    }
 
 }
