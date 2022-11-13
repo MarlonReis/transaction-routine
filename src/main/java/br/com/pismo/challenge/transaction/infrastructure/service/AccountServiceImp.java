@@ -1,4 +1,4 @@
-package br.com.pismo.challenge.transaction.infraestructure.service;
+package br.com.pismo.challenge.transaction.infrastructure.service;
 
 import br.com.pismo.challenge.transaction.domain.account.boundary.input.CreateAccountInputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.CreateAccountOutputBoundary;
@@ -10,7 +10,7 @@ import br.com.pismo.challenge.transaction.domain.account.service.GenerateCodeSer
 import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
 import br.com.pismo.challenge.transaction.domain.customer.value.object.DocumentCPF;
 import br.com.pismo.challenge.transaction.domain.exception.AccountException;
-import br.com.pismo.challenge.transaction.domain.shared.IdEntity;
+import br.com.pismo.challenge.transaction.domain.shared.value.object.IdEntity;
 import br.com.pismo.challenge.transaction.repository.AccountRepository;
 import br.com.pismo.challenge.transaction.repository.CustomerRepository;
 import org.slf4j.Logger;

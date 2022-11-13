@@ -1,10 +1,10 @@
-package br.com.pismo.challenge.transaction.infraestructure.controller;
+package br.com.pismo.challenge.transaction.infrastructure.controller;
 
 import br.com.pismo.challenge.transaction.domain.account.boundary.input.CreateAccountInputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.CreateAccountOutputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.GetAccountOutputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
-import br.com.pismo.challenge.transaction.domain.shared.IdEntity;
+import br.com.pismo.challenge.transaction.domain.shared.value.object.IdEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

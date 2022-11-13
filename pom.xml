@@ -136,10 +136,12 @@
                 <configuration>
                     <targetClasses>
                         <param>br.com.pismo.challenge.transaction.domain.*.entity</param>
+                        <param>br.com.pismo.challenge.transaction.domain.*.value.*</param>
                         <param>br.com.pismo.challenge.transaction.infrastructure.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>br.com.pismo.challenge.transaction.*.entity</param>
+                        <param>br.com.pismo.challenge.transaction.domain.*.entity</param>
+                        <param>br.com.pismo.challenge.transaction.domain.*.value.*</param>
                         <param>br.com.pismo.challenge.transaction.infrastructure.*</param>
                     </targetTests>
                 </configuration>

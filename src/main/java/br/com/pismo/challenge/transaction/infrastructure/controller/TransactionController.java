@@ -1,4 +1,4 @@
-package br.com.pismo.challenge.transaction.infraestructure.controller;
+package br.com.pismo.challenge.transaction.infrastructure.controller;
 
 import br.com.pismo.challenge.transaction.domain.transaction.boundary.input.SaveTransactionInputBoundary;
 import br.com.pismo.challenge.transaction.domain.transaction.service.TransactionService;

@@ -1,4 +1,4 @@
-package br.com.pismo.challenge.transaction.infraestructure.config;
+package br.com.pismo.challenge.transaction.infrastructure.config;
 
 import br.com.pismo.challenge.transaction.domain.exception.DomainException;
 import br.com.pismo.challenge.transaction.domain.exception.ExceptionData;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import java.sql.SQLException;
+
 import java.util.stream.Collectors;
 
 
@@ -28,13 +28,6 @@ public class CustomerRestExceptionHandler extends ResponseEntityExceptionHandler
         return ResponseEntity.status(ex.getStatus()).body(ex.getData());
     }
 
-    @ExceptionHandler(SQLException.class)
-    public ResponseEntity<ExceptionData> sqlExceptionHandler(SQLException ex) {
-        logger.info("sqlExceptionHandler: Exception: {}, SQL Code:{}, Message: {}", ex.getClass().getSimpleName(),
-                ex.getErrorCode(), ex.getMessage());
-        final var data = new ExceptionData(TypException.INTERNAL_ERROR_SERVER, "Internal server error ! Please try again later!");
-        return ResponseEntity.internalServerError().body(data);
-    }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionData> runtimeExceptionHandler(RuntimeException ex) {

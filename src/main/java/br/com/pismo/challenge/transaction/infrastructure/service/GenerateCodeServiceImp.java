@@ -1,4 +1,4 @@
-package br.com.pismo.challenge.transaction.infraestructure.service;
+package br.com.pismo.challenge.transaction.infrastructure.service;
 
 import br.com.pismo.challenge.transaction.domain.account.service.GenerateCodeService;
 import org.springframework.stereotype.Service;

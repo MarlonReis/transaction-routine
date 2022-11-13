@@ -1,4 +1,4 @@
-package br.com.pismo.challenge.transaction.infraestructure.service;
+package br.com.pismo.challenge.transaction.infrastructure.service;
 
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.GetAccountOutputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
@@ -6,15 +6,12 @@ import br.com.pismo.challenge.transaction.domain.transaction.boundary.input.Save
 import br.com.pismo.challenge.transaction.domain.transaction.constant.TransactionType;
 import br.com.pismo.challenge.transaction.domain.transaction.entity.Transaction;
 import br.com.pismo.challenge.transaction.repository.TransactionRepository;
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -24,9 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,7 +56,7 @@ class TransactionServiceImpTest {
                 type.getCode(),
                 BigDecimal.valueOf(10.00)
         );
-        
+
         transactionService.saveTransaction(transaction);
         ArgumentCaptor<Transaction> argument = ArgumentCaptor.forClass(Transaction.class);
         Mockito.verify(transactionRepository).save(argument.capture());

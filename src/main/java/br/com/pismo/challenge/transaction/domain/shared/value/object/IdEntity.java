@@ -1,4 +1,4 @@
-package br.com.pismo.challenge.transaction.domain.shared;
+package br.com.pismo.challenge.transaction.domain.shared.value.object;
 
 import br.com.pismo.challenge.transaction.domain.exception.IdentityException;
 

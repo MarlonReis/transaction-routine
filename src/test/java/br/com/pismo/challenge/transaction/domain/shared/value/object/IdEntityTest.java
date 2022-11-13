@@ -1,8 +1,9 @@
-package br.com.pismo.challenge.transaction.domain.shared;
+package br.com.pismo.challenge.transaction.domain.shared.value.object;
 
 import br.com.pismo.challenge.transaction.domain.exception.DomainException;
 import br.com.pismo.challenge.transaction.domain.exception.IdentityException;
 import br.com.pismo.challenge.transaction.domain.exception.TypException;
+import br.com.pismo.challenge.transaction.domain.shared.value.object.IdEntity;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

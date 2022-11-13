@@ -1,12 +1,9 @@
-package br.com.pismo.challenge.transaction.infraestructure.controller;
+package br.com.pismo.challenge.transaction.infrastructure.controller;
 
 import br.com.pismo.challenge.transaction.ChallengeApplication;
-import br.com.pismo.challenge.transaction.domain.account.boundary.input.CreateAccountInputBoundary;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.GetAccountOutputBoundary;
-import br.com.pismo.challenge.transaction.domain.account.entity.AccountBuilder;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
 import br.com.pismo.challenge.transaction.domain.exception.TypException;
-import br.com.pismo.challenge.transaction.domain.shared.IdEntity;
 import br.com.pismo.challenge.transaction.domain.transaction.boundary.input.SaveTransactionInputBoundary;
 import br.com.pismo.challenge.transaction.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,9 +23,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
