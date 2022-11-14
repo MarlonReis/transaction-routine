@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -46,7 +47,7 @@ class AccountRepositoryTest {
         Account response = repository.save(account);
 
         assertThat(response.getId(), CoreMatchers.notNullValue());
-        assertThat(response.getCreateAt(), DateMatchers.sameSecondOfMinute(new Date()));
+        assertThat(response.getCreateAt(), DateMatchers.sameMinuteOfHour(new Date()));
         assertThat(response.getAccountBalance(), CoreMatchers.is(new BigDecimal(10)));
         assertThat(response.getCodeBank(), CoreMatchers.is("1"));
         assertThat(response.getCustomer(), CoreMatchers.notNullValue());
@@ -61,7 +62,7 @@ class AccountRepositoryTest {
             repository.findAll();
         });
 
-        assertThat(exception.toString(), CoreMatchers.containsString("UniqueAccountNumber"));
+        assertThat(exception.toString(), CoreMatchers.containsStringIgnoringCase("UniqueAccountNumber"));
     }
 
 
