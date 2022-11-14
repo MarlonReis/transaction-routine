@@ -1,21 +1,37 @@
-# Getting Started
+## Rotina de transações
 
-### Reference Documentation
-For further reference, please consider the following sections:
+Cada portador de cartão (cliente) possui uma conta com seus dados. A cada operação realizada pelo cliente uma transação é criada e associada à sua respectiva conta. Cada transação possui um tipo (compra à vista, compra parcelada, saque ou pagamento), um valor e uma data de criação. Transações de tipo compra e saque são registradas com valor negativo, enquanto transações de pagamento são registradas com valor positivo.
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.5/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.5/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.5/reference/htmlsingle/#web)
-* [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/2.7.5/reference/htmlsingle/#actuator)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.7.5/reference/htmlsingle/#data.sql.jpa-and-spring-data)
+---
+## Requisitos do ambiente
+Para executar esse projeto no ambiente local é necessário.
 
-### Guides
-The following guides illustrate how to use some features concretely:
+- OpenJDK 14
+- Docker
+- Docker-compose
+- Maven 3.6.3
+---
+## Construção do projeto
+Para que esse projeto possa ser executado no ambiente será necessário executar os comando descrito a baixo:
+**Construção da imagem docker da aplicação**
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+    mvn spring-boot:build-image
+
+**Rodando a aplicação usando docker**
+
+     docker-compose --env-file ./docker.env up -d
+---
+## Testes
+Para esse projeto os testes de unidade, integração e e2e são executados juntos, com o mesmo comando.
+
+    mvn clean test
+
+### Testes de mutação
+Para os testes de mutação está sendo utilizado o plugin do **Pitest**.  Essa estrategia de teste serve para nos auxiliar a aumentar a qualidade dos nossos testes.
+```
+mvn test-compile org.pitest:pitest-maven:mutationCoverage
+``` 
+O resultado do teste fica na pasta
+```
+target/pit-reports/*/index.html
 

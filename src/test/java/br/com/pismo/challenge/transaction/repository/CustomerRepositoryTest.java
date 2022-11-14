@@ -35,7 +35,6 @@ class CustomerRepositoryTest {
     }
 
 
-
     @Test
     @DisplayName("should return true when found customer data with the same document")
     void shouldReturnTrueWhenFoundCustomerRegisterByDocument() {
@@ -53,6 +52,6 @@ class CustomerRepositoryTest {
             repository.findAll();
         });
 
-        assertThat(exception.toString(), CoreMatchers.containsString("UniqueCustomerDocument"));
+        assertThat(exception.toString(), CoreMatchers.containsStringIgnoringCase("UniqueCustomerDocument"));
     }
 }
