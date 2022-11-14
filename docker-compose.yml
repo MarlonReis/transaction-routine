@@ -6,10 +6,8 @@ services:
     volumes:
       - ./database:/var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
     restart: on-failure
-    env_file:
-      - docker.env
     environment:
       - MYSQL_USER=${DATABASE_USER}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD}
@@ -20,10 +18,8 @@ services:
 
   api:
     image: transaction:0.0.1-SNAPSHOT
-    env_file:
-      - docker.env
     ports:
-      - 8080:8080
+      - "8080:8080"
     restart: on-failure
     depends_on:
       - database
