@@ -33,7 +33,7 @@ public class CustomerRestExceptionHandler extends ResponseEntityExceptionHandler
     public ResponseEntity<ExceptionData> runtimeExceptionHandler(RuntimeException ex) {
         logger.info("runtimeExceptionHandler: Exception: {}, Message: {}", ex.getClass().getSimpleName(), ex.getMessage());
         final var data = new ExceptionData(TypException.INTERNAL_ERROR_SERVER, "Internal server error ! Please try again later!");
-        return ResponseEntity.internalServerError().body(data);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(data);
     }
 
 
