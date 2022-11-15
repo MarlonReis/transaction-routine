@@ -27,7 +27,7 @@ Para que esse projeto possa ser executado no ambiente será necessário executar
 
 **Rodando a aplicação usando docker**
 
-```
+```bash
 docker-compose --env-file ./docker.env up -d
 ```
 
@@ -37,7 +37,7 @@ docker-compose --env-file ./docker.env up -d
 
 Para esse projeto os testes de unidade, integração e e2e são executados juntos, com o mesmo comando.
 
-``` 
+```bash
 mvn clean test
 ```
 
@@ -46,7 +46,7 @@ mvn clean test
 Para os testes de mutação está sendo utilizado o plugin do **Pitest**. Essa estrategia de teste serve para nos auxiliar
 a aumentar a qualidade dos nossos testes.
 
-```
+```bash
 mvn test-compile org.pitest:pitest-maven:mutationCoverage
 ``` 
 
@@ -65,7 +65,7 @@ target/pit-reports/*/index.html
 Para criação de uma conta é necessário um CPF valido, que pode ser [gerado](https://www.4devs.com.br/gerador_de_cpf)
 online.
 
-```http
+```bash
 curl --location --request POST 'http://localhost:8080/v1/accounts' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -111,7 +111,7 @@ Status code 422
 
 #### BUSCA DADOS DA CONTA POR ID
 
-```http
+```bash
 curl --location --request GET 'http://localhost:8080/v1/accounts/{ID DA CONTA}'
 ```
 
@@ -148,7 +148,7 @@ Status code 404
 
 #### SALVA TRANSAÇÃO
 
-```HTTP
+```bash
 curl --location --request POST 'http://localhost:8080/v1/transactions' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -193,7 +193,7 @@ Status code 422
 
 Esse recurso é utilizado pelo serviço de balanceamento de carga para monitorar a saúde da aplicação.
 
-```http
+```bash
 curl --location --request GET 'http://localhost:8080/actuator/health/custom'
 ```
 
