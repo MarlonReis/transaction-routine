@@ -19,6 +19,7 @@ jobs:
 
       - name: Test
         run: mvn clean test
+
       - name: Build
         run: mvn spring-boot:build-image -DskipTests
 
@@ -37,9 +38,6 @@ jobs:
         with:
           username: "marlonreis"
           password: "Mku@157088"
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: marlonreis/challenge-transaction:latest
+
+      - name: Push
+        run: docker push marlonreis/challenge-transaction:latest
