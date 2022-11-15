@@ -17,6 +17,12 @@ jobs:
           java-version: '16'
           cache: maven
 
+      - uses: avides/actions-project-version-check@latest
+        id: actions_project_version_check
+        with:
+          token: ${{ secrets.GIT_HUB_TOKEN }}
+          file-to-check: pom.xml
+
       - name: Test
         run: mvn clean test
 
@@ -24,6 +30,11 @@ jobs:
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         run: mvn spring-boot:build-image -DskipTests  -DDockerHubUsername="$DOCKER_HUB_USERNAME"
+
+      - name: Get application version
+        run:
+          echo "New version is: " ${{ steps.actions_project_version_check.outputs.version }}"
+
 
         # DOCKER
       - name: Checkout
