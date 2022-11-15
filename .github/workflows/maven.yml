@@ -25,18 +25,6 @@ jobs:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         run: mvn spring-boot:build-image -DskipTests  -DDockerHubUsername="$DOCKER_HUB_USERNAME"
 
-      - name: Application version
-        uses: avides/actions-project-version-check@latest
-        id: actions_project_version_check
-        with:
-          token: ${{ secrets.GIT_HUB_TOKEN }}
-          file-to-check: pom.xml
-
-      - name: Get application version
-        run:
-          echo "New version is: " ${{ steps.actions_project_version_check.outputs.version }}"
-
-
         # DOCKER
       - name: Checkout
         uses: actions/checkout@v3
@@ -56,4 +44,6 @@ jobs:
       - name: Push
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-        run: docker push "$DOCKER_HUB_USERNAME"/challenge-transaction:latest
+        run: | 
+          PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          docker push "$DOCKER_HUB_USERNAME"/challenge-transaction:"$PROJECT_VERSION"
