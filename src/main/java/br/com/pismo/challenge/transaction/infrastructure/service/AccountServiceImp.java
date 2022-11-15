@@ -58,7 +58,7 @@ public class AccountServiceImp implements AccountService {
                     withCustomerName(customer.getFullName()).
                     withAccountNumber(account.getAccountNumber()).
                     withAgency(account.getAgency()).withCodeBank(account.getCodeBank()).
-                    withCustomerId(customer.getId().toString()).
+                    withAccount(account.getId().toString()).
                     build();
 
         } catch (DataIntegrityViolationException ex) {

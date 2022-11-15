@@ -17,7 +17,7 @@ services:
       - challenge
 
   api:
-    image: transaction:0.0.1-SNAPSHOT
+    image: challenge-transaction:latest
     ports:
       - "8080:8080"
     restart: on-failure

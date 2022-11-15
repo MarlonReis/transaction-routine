@@ -11,8 +11,8 @@ public final class CreateAccountOutputBoundaryBuilder {
         return new CreateAccountOutputBoundaryBuilder();
     }
 
-    public CreateAccountOutputBoundaryBuilder withCustomerId(String customerId) {
-        boundary.setCustomerId(customerId);
+    public CreateAccountOutputBoundaryBuilder withAccount(String account) {
+        boundary.setAccountId(account);
         return this;
     }
 
@@ -35,7 +35,6 @@ public final class CreateAccountOutputBoundaryBuilder {
         boundary.setCustomerName(name);
         return this;
     }
-
 
 
     public CreateAccountOutputBoundary build() {

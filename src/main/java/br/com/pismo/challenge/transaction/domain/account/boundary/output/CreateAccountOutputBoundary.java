@@ -1,14 +1,14 @@
 package br.com.pismo.challenge.transaction.domain.account.boundary.output;
 
 public class CreateAccountOutputBoundary {
-    private String customerId;
+    private String accountId;
     private String agency;
     private String accountNumber;
     private String codeBank;
     private String customerName;
 
-    public String getCustomerId() {
-        return customerId;
+    public String getAccountId() {
+        return accountId;
     }
 
     public String getAgency() {
@@ -27,8 +27,8 @@ public class CreateAccountOutputBoundary {
         return customerName;
     }
 
-    protected void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    protected void setAccountId(String customerId) {
+        this.accountId = customerId;
     }
 
     protected void setAgency(String agency) {

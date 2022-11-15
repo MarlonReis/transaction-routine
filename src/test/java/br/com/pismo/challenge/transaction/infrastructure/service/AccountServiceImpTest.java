@@ -79,7 +79,7 @@ class AccountServiceImpTest {
         var response = accountService.createAccount(
                 new CreateAccountInputBoundary("Fulano de Tals", "73823594095"));
 
-        assertThat(response, Matchers.hasProperty("customerId", Matchers.notNullValue()));
+        assertThat(response, Matchers.hasProperty("accountId", Matchers.notNullValue()));
         assertThat(response, Matchers.hasProperty("agency", Matchers.is("0000")));
         assertThat(response, Matchers.hasProperty("accountNumber", Matchers.is("000000")));
         assertThat(response, Matchers.hasProperty("codeBank", Matchers.is("00")));

@@ -10,7 +10,7 @@
     </parent>
     <groupId>br.com.pismo.challenge.transaction</groupId>
     <artifactId>transaction</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>transaction</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -135,12 +135,12 @@
                 <configuration>
                     <mainClass>br.com.pismo.challenge.transaction.ChallengeApplication</mainClass>
                     <executable>true</executable>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
                     <image>
                         <name>docker.io/library/${project.build.finalName}</name>
                     </image>
-                    <layers>
-                        <enabled>false</enabled>
-                    </layers>
                 </configuration>
                 <executions>
                     <execution>
