@@ -22,8 +22,9 @@ Para executar esse projeto no ambiente local é necessário.
 
 Para que esse projeto possa ser executado no ambiente será necessário executar os comando descrito a baixo:
 **Construção da imagem docker da aplicação**
-
-    mvn spring-boot:build-image
+```bash
+mvn spring-boot:build-image
+```
 
 **Rodando a aplicação usando docker**
 
