@@ -119,7 +119,7 @@ curl --location --request GET 'http://localhost:8080/v1/accounts/{ID DA CONTA}'
 
 Status code 200
 
-```
+```json
 {
     "accountId": "c82fbed2-ffda-4b8f-b146-ecc67585fdb1",
     "documentNumber": "88212301044"
@@ -128,7 +128,7 @@ Status code 200
 
 Status code 404
 
-```
+```json
 {
     "code": "REGISTER_NOT_FOUND",
     "message": "Account register cannot be found!",
