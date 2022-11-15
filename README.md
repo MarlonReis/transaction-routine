@@ -16,14 +16,25 @@ Para executar esse projeto no ambiente local é necessário.
 - Docker-compose
 - Maven 3.6.3
 
+
+
+---
+
+#### RECURSOS
+
+[IMAGEM NO DOCKER HUB)](https://hub.docker.com/r/marlonreis/challenge-transaction)
+
+[GITHUB PIPELINE](https://github.com/MarlonReis/transaction-routine/actions/workflows/maven.yml)
+
 ---
 
 ## Construção do projeto
 
 Para que esse projeto possa ser executado no ambiente será necessário executar os comando descrito a baixo:
 **Construção da imagem docker da aplicação**
+
 ```bash
-mvn spring-boot:build-image
+mvn spring-boot:build-image -DDockerHubUsername=docker-hub-username
 ```
 
 **Rodando a aplicação usando docker**
@@ -49,7 +60,7 @@ a aumentar a qualidade dos nossos testes.
 
 ```bash
 mvn test-compile org.pitest:pitest-maven:mutationCoverage
-``` 
+```
 
 O resultado do teste fica na pasta
 
