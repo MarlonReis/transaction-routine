@@ -9,13 +9,15 @@ public class CreditLimit {
 
 
     public CreditLimit(BigDecimal value) {
-        this.value = value;
         if (value == null) {
             throw LimitException.valueIsRequired("Credit limit is required!");
         }
+
         if (value.signum() == -1) {
             throw LimitException.cannotBeNegative("Credit limit cannot be negative!");
         }
+
+        this.value = value;
     }
 
     public BigDecimal getValue() {

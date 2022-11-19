@@ -190,13 +190,31 @@ class AccountControllerTest {
 
 
     @Test
-    void shouldReturn400WhenLimitIsNull() {
-        fail();
+    @DisplayName("should return 400 when limit account ")
+    void shouldReturn400WhenLimitIsNull() throws Exception {
+        final var body = new CreateAccountInputBoundary("Bertana de Tals",
+                "855.763.340-86", null);
+
+        mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(TypException.INVALID_REQUEST.toString()))
+                .andExpect(jsonPath("$.message").value(Matchers.notNullValue()))
+                .andExpect(jsonPath("$.date").value(Matchers.notNullValue()));
     }
 
     @Test
-    void shouldReturn422WhenLimitIsNegative() {
-        fail();
+    @DisplayName("should return 422 when creditLimit is negative")
+    void shouldReturn422WhenLimitIsNegative() throws Exception {
+        final var body = new CreateAccountInputBoundary("Bertana de Tals",
+                "855.763.340-86", new BigDecimal(-1000));
+
+        mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.code").value(TypException.CREDIT_LIMIT_CANNOT_BE_NEGATIVE.toString()))
+                .andExpect(jsonPath("$.message").value(Matchers.notNullValue()))
+                .andExpect(jsonPath("$.date").value(Matchers.notNullValue()));
     }
 
 

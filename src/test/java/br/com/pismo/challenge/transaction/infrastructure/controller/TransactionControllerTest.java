@@ -2,9 +2,12 @@ package br.com.pismo.challenge.transaction.infrastructure.controller;
 
 import br.com.pismo.challenge.transaction.ChallengeApplication;
 import br.com.pismo.challenge.transaction.domain.account.boundary.output.GetAccountOutputBoundary;
+import br.com.pismo.challenge.transaction.domain.account.entity.Account;
+import br.com.pismo.challenge.transaction.domain.account.entity.AccountBuilder;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
 import br.com.pismo.challenge.transaction.domain.exception.TypException;
 import br.com.pismo.challenge.transaction.domain.transaction.boundary.input.SaveTransactionInputBoundary;
+import br.com.pismo.challenge.transaction.repository.AccountRepository;
 import br.com.pismo.challenge.transaction.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
@@ -23,6 +26,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -42,15 +48,13 @@ class TransactionControllerTest {
     private TransactionRepository transactionRepository;
 
     @SpyBean
-    private AccountService accountService;
+    private AccountRepository accountRepository;
 
     private ObjectMapper mapper;
 
     private MockHttpServletRequestBuilder request;
 
-    private String accountId = "9d0dc4c6-b9a3-439a-808f-28d13258645a";
-
-    private GetAccountOutputBoundary account;
+    private Account account;
 
     @BeforeEach
     public void setUp() {
@@ -58,15 +62,20 @@ class TransactionControllerTest {
         request = post("/v1/transactions").contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON);
 
-        account = new GetAccountOutputBoundary(accountId, "34144341054");
+        account = AccountBuilder.builder().withId(UUID.randomUUID()).withAgency("232")
+                .withAccountNumber("423423").withCodeBank("1")
+                .withAccountBalance(new BigDecimal(1000))
+                .withCreateAt(new Date())
+                .withCreditLimit(new BigDecimal(1000))
+                .build();
     }
 
     @Test
     @DisplayName("should return 200 when save transaction with success")
     void shouldReturn200WhenSaveTransactionWithSuccess() throws Exception {
-        BDDMockito.willReturn(account).given(accountService).getAccountById(BDDMockito.any());
+        BDDMockito.willReturn(Optional.of(account)).given(accountRepository).findById(BDDMockito.any());
 
-        final var body = new SaveTransactionInputBoundary(accountId, 1, BigDecimal.valueOf(10.0));
+        final var body = new SaveTransactionInputBoundary(UUID.randomUUID().toString(), 1, BigDecimal.valueOf(10.0));
         mockMvc.perform(request.content(mapper.writeValueAsString(body)))
                 .andExpect(status().isOk());
     }
@@ -74,7 +83,9 @@ class TransactionControllerTest {
     @Test
     @DisplayName("should return 404 when account not found")
     void shouldReturn404WhenAccountNotFound() throws Exception {
-        final var body = new SaveTransactionInputBoundary(accountId, 1, BigDecimal.valueOf(10.0));
+        BDDMockito.willReturn(Optional.empty()).given(accountRepository).findById(BDDMockito.any());
+
+        final var body = new SaveTransactionInputBoundary(UUID.randomUUID().toString(), 1, BigDecimal.valueOf(10.0));
         mockMvc.perform(request.content(mapper.writeValueAsString(body)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value(TypException.REGISTER_NOT_FOUND.toString()))
@@ -85,7 +96,7 @@ class TransactionControllerTest {
     @Test
     @DisplayName("should return 422 when operation type is unknown")
     void shouldReturn422WhenOperationTypeIsUnknown() throws Exception {
-        final var body = new SaveTransactionInputBoundary(accountId, 8, BigDecimal.valueOf(10.0));
+        final var body = new SaveTransactionInputBoundary(UUID.randomUUID().toString(), 8, BigDecimal.valueOf(10.0));
         mockMvc.perform(request.content(mapper.writeValueAsString(body)))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.code").
@@ -106,9 +117,9 @@ class TransactionControllerTest {
     @Test
     @DisplayName("should return 422 when purchase receive negative value")
     void shouldReturn422WhenReceiveAmountAndOperationAreInvalid() throws Exception {
-        BDDMockito.willReturn(account).given(accountService).getAccountById(BDDMockito.any());
+        BDDMockito.willReturn(Optional.of(account)).given(accountRepository).findById(BDDMockito.any());
 
-        final var body = new SaveTransactionInputBoundary(accountId, 1, BigDecimal.valueOf(-10.0));
+        final var body = new SaveTransactionInputBoundary(UUID.randomUUID().toString(), 1, BigDecimal.valueOf(-10.0));
         mockMvc.perform(request.content(mapper.writeValueAsString(body)))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.code").

@@ -1,7 +1,6 @@
 package br.com.pismo.challenge.transaction.infrastructure.service;
 
 import br.com.pismo.challenge.transaction.domain.account.entity.Account;
-import br.com.pismo.challenge.transaction.domain.account.entity.AccountBuilder;
 import br.com.pismo.challenge.transaction.domain.exception.AccountException;
 import br.com.pismo.challenge.transaction.domain.shared.value.object.IdEntity;
 import br.com.pismo.challenge.transaction.domain.transaction.boundary.input.SaveTransactionInputBoundary;
