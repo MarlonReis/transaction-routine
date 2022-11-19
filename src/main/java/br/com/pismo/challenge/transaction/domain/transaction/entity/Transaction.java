@@ -74,6 +74,7 @@ public class Transaction {
 
         this.value = value.negate();
         this.type = type;
+
     }
 
     public void withdrawMoney(BigDecimal value) {

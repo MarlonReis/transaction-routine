@@ -77,7 +77,7 @@ class AccountServiceImpTest {
         when(accountRepository.save(Mockito.any())).thenReturn(account);
 
         var response = accountService.createAccount(
-                new CreateAccountInputBoundary("Fulano de Tals", "73823594095"));
+                new CreateAccountInputBoundary("Fulano de Tals", "73823594095", BigDecimal.valueOf(7000)));
 
         assertThat(response, Matchers.hasProperty("accountId", Matchers.notNullValue()));
         assertThat(response, Matchers.hasProperty("agency", Matchers.is("0000")));
@@ -91,7 +91,7 @@ class AccountServiceImpTest {
     @DisplayName("should throws InvalidDocumentException when receive invalid document")
     void shouldThrowInvalidDocumentExceptionWhenReceiveInvalidDocument() {
         var exception = assertThrows(InvalidDocumentException.class, () -> accountService.createAccount(
-                new CreateAccountInputBoundary("Fulano de Tals", "12365487952")));
+                new CreateAccountInputBoundary("Fulano de Tals", "12365487952", BigDecimal.valueOf(7000))));
 
         assertThat(exception.getData().getCode(), Matchers.is(DOCUMENT_IS_INVALID));
     }
@@ -102,7 +102,7 @@ class AccountServiceImpTest {
         Mockito.when(customerRepository.existsByDocument(Mockito.any())).thenReturn(true);
 
         var exception = assertThrows(AccountException.class, () -> accountService.createAccount(
-                new CreateAccountInputBoundary("Fulano de Tals", "38487409075")));
+                new CreateAccountInputBoundary("Fulano de Tals", "38487409075", BigDecimal.valueOf(7000))));
 
         assertThat(exception.getData().getCode(), Matchers.is(DOCUMENT_IS_BEING_USED_BY_ANOTHER_ACCOUNT));
     }
@@ -113,7 +113,7 @@ class AccountServiceImpTest {
         Mockito.when(customerRepository.save(Mockito.any())).thenThrow(new DataIntegrityViolationException("Any message"));
 
         var exception = assertThrows(AccountException.class, () -> accountService.createAccount(
-                new CreateAccountInputBoundary("Fulano de Tals", "38487409075")));
+                new CreateAccountInputBoundary("Fulano de Tals", "38487409075", new BigDecimal("34"))));
 
         assertThat(exception.getData().getCode(), Matchers.is(CANNOT_CREATE_ACCOUNT));
     }

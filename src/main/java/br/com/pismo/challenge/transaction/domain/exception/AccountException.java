@@ -19,6 +19,10 @@ public class AccountException extends DomainException {
         return new AccountException(UNPROCESSABLE_ENTITY, DOCUMENT_IS_BEING_USED_BY_ANOTHER_ACCOUNT, message);
     }
 
+    public static AccountException balanceValueIsRequired(String message) {
+        return new AccountException(UNPROCESSABLE_ENTITY, ACCOUNT_BALANCE_IS_REQUIRED, message);
+    }
+
     public static AccountException accountNotFound(String message) {
         return new AccountException(NOT_FOUND, REGISTER_NOT_FOUND, message);
     }

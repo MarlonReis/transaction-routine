@@ -59,6 +59,12 @@ public final class AccountBuilder {
         return this;
     }
 
+    public AccountBuilder withCreditLimit(BigDecimal value) {
+        account.setCreditLimit(value);
+        return this;
+    }
+
+
     public AccountBuilder withTransactions(Set<Transaction> transactions) {
         account.setTransactions(transactions);
         return this;

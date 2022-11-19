@@ -26,8 +26,12 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -60,7 +64,7 @@ class AccountControllerTest {
     @Test
     @DisplayName("should return 200 when create account with success")
     void shouldReturn200WhenAccountCreateWithSuccess() throws Exception {
-        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038");
+        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038", BigDecimal.valueOf(7000));
 
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
@@ -70,7 +74,7 @@ class AccountControllerTest {
     @Test
     @DisplayName("should return 422 when document is invalid")
     void shouldReturn422WhenDocumentIsInvalid() throws Exception {
-        final var body = new CreateAccountInputBoundary("Bertana de Tals", "12345678901");
+        final var body = new CreateAccountInputBoundary("Bertana de Tals", "12345678901", BigDecimal.valueOf(7000));
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
                 .andExpect(status().isUnprocessableEntity())
@@ -85,7 +89,7 @@ class AccountControllerTest {
     void shouldReturn422WhenDocumentIsBeingUsedByAnotherAccount() throws Exception {
         customerRepository.save(new Customer(new DocumentCPF("41106307038"), "Other Name"));
 
-        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038");
+        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038", BigDecimal.valueOf(7000));
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
                 .andExpect(status().isUnprocessableEntity())
@@ -101,7 +105,7 @@ class AccountControllerTest {
         BDDMockito.willThrow(DataIntegrityViolationException.class).
                 given(accountRepository).save(BDDMockito.any());
 
-        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038");
+        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038", BigDecimal.valueOf(7000));
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
                 .andExpect(status().is5xxServerError())
@@ -115,7 +119,7 @@ class AccountControllerTest {
     void shouldReturn500WhenInternalClassThrowAnyRuntimeException() throws Exception {
         BDDMockito.willThrow(new NullPointerException("Message")).given(customerRepository).existsByDocument("41106307038");
 
-        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038");
+        final var body = new CreateAccountInputBoundary("Bertana de Tals", "41106307038", BigDecimal.valueOf(7000));
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
                 .andExpect(status().is5xxServerError())
@@ -127,7 +131,7 @@ class AccountControllerTest {
     @Test
     @DisplayName("should return 400 when request attribute is null")
     void shouldReturn400WhenRequestAttributeIsNull() throws Exception {
-        final var body = new CreateAccountInputBoundary("Bertana de Tals", null);
+        final var body = new CreateAccountInputBoundary("Bertana de Tals", null, BigDecimal.valueOf(7000));
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
                 .andExpect(status().isBadRequest())
@@ -182,6 +186,17 @@ class AccountControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accountId").value(Matchers.notNullValue()))
                 .andExpect(jsonPath("$.documentNumber").value(Matchers.notNullValue()));
+    }
+
+
+    @Test
+    void shouldReturn400WhenLimitIsNull() {
+        fail();
+    }
+
+    @Test
+    void shouldReturn422WhenLimitIsNegative() {
+        fail();
     }
 
 

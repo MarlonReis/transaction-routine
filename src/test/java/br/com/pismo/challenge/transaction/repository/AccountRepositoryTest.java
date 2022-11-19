@@ -1,6 +1,7 @@
 package br.com.pismo.challenge.transaction.repository;
 
 import br.com.pismo.challenge.transaction.domain.account.entity.Account;
+import br.com.pismo.challenge.transaction.domain.account.value.object.CreditLimit;
 import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
 import br.com.pismo.challenge.transaction.domain.customer.value.object.DocumentCPF;
 import org.exparity.hamcrest.date.DateMatchers;
@@ -43,7 +44,7 @@ class AccountRepositoryTest {
     @Test
     @DisplayName("should salve correct account data")
     void shouldCreateCorrectAccount() {
-        Account account = new Account("232", "423423", "1", BigDecimal.TEN, customer);
+        Account account = new Account("232", "423423", "1", BigDecimal.TEN, customer, new CreditLimit(BigDecimal.TEN));
         Account response = repository.save(account);
 
         assertThat(response.getId(), CoreMatchers.notNullValue());
@@ -57,8 +58,8 @@ class AccountRepositoryTest {
     @DisplayName("should throw exception when account number duplicate")
     void shouldThrowsExceptionWhenAccountNumberDuplicate() {
         final var exception = assertThrows(DataIntegrityViolationException.class, () -> {
-            repository.save(new Account("232", "4234233", "1", BigDecimal.TEN, customer));
-            repository.save(new Account("232", "4234233", "1", BigDecimal.TEN, customer));
+            repository.save(new Account("232", "4234233", "1", BigDecimal.TEN, customer, new CreditLimit(BigDecimal.TEN)));
+            repository.save(new Account("232", "4234233", "1", BigDecimal.TEN, customer, new CreditLimit(BigDecimal.TEN)));
             repository.findAll();
         });
 

@@ -1,6 +1,5 @@
 package br.com.pismo.challenge.transaction.domain.exception;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public final class ExceptionData {

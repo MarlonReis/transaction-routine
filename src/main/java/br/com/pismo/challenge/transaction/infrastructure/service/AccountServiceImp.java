@@ -7,6 +7,7 @@ import br.com.pismo.challenge.transaction.domain.account.boundary.output.GetAcco
 import br.com.pismo.challenge.transaction.domain.account.entity.Account;
 import br.com.pismo.challenge.transaction.domain.account.service.AccountService;
 import br.com.pismo.challenge.transaction.domain.account.service.GenerateCodeService;
+import br.com.pismo.challenge.transaction.domain.account.value.object.CreditLimit;
 import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
 import br.com.pismo.challenge.transaction.domain.customer.value.object.DocumentCPF;
 import br.com.pismo.challenge.transaction.domain.exception.AccountException;
@@ -42,17 +43,21 @@ public class AccountServiceImp implements AccountService {
     public CreateAccountOutputBoundary createAccount(CreateAccountInputBoundary boundary) {
         final var document = new DocumentCPF(boundary.getDocumentCpf());
 
+
         try {
             if (customerRepository.existsByDocument(document.value())) {
                 logger.info("Customer cannot create account because the document is being used: document: {}", document.value());
                 throw AccountException.documentIsBeUsedByAnotherAccount("This document is being used by another customer and another account!");
             }
+
             var customer = customerRepository.save(new Customer(document, boundary.getFullName()));
             var account = accountRepository.save(new Account(
                     generateCodeService.getAgencyNumber(),
                     generateCodeService.generateAccountNumber(),
                     generateCodeService.getCodeBank(),
-                    BigDecimal.ZERO, customer));
+                    BigDecimal.ZERO, customer,
+                    new CreditLimit(boundary.getCreditLimit())
+            ));
 
             return CreateAccountOutputBoundaryBuilder.builder().
                     withCustomerName(customer.getFullName()).

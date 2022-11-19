@@ -1,7 +1,10 @@
 package br.com.pismo.challenge.transaction.domain.account.entity;
 
 
+import br.com.pismo.challenge.transaction.domain.account.value.object.CreditLimit;
 import br.com.pismo.challenge.transaction.domain.customer.entity.Customer;
+import br.com.pismo.challenge.transaction.domain.exception.AccountException;
+import br.com.pismo.challenge.transaction.domain.exception.LimitException;
 import br.com.pismo.challenge.transaction.domain.transaction.entity.Transaction;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
@@ -14,16 +17,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(indexes = {
-        @Index(name = "index_account_id", columnList = "id"),
-        @Index(name = "index_account_account_number", columnList = "accountNumber"),
-        @Index(name = "index_account_create_at", columnList = "createAt"),
-        @Index(name = "index_account_customer_id", columnList = "customer_id")
-},
-        uniqueConstraints = {
-                @UniqueConstraint(name = "UniqueAccountNumber", columnNames = {"accountNumber"})
-        }
-)
+@Table(indexes = {@Index(name = "index_account_id", columnList = "id"), @Index(name = "index_account_account_number", columnList = "accountNumber"), @Index(name = "index_account_create_at", columnList = "createAt"), @Index(name = "index_account_customer_id", columnList = "customer_id")}, uniqueConstraints = {@UniqueConstraint(name = "UniqueAccountNumber", columnNames = {"accountNumber"})})
 public class Account implements Serializable {
     @Id
     @Type(type = "uuid-char")
@@ -38,6 +32,10 @@ public class Account implements Serializable {
     private Customer customer;
 
     private BigDecimal accountBalance;
+
+    private BigDecimal creditLimit;
+
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createAt;
@@ -46,15 +44,30 @@ public class Account implements Serializable {
     private Set<Transaction> transactions;
 
 
-    public Account(String agency, String accountNumber, String codeBank, BigDecimal accountBalance, Customer customer) {
+    public Account(String agency, String accountNumber, String codeBank, BigDecimal accountBalance, Customer customer, CreditLimit limit) {
         this.agency = agency;
         this.accountNumber = accountNumber;
         this.codeBank = codeBank;
         this.accountBalance = accountBalance;
         this.customer = customer;
+        this.creditLimit = limit.getValue();
     }
 
     public Account() {
+    }
+
+    public void updateAccountBalance(BigDecimal value) {
+        if (value == null) {
+            throw AccountException.balanceValueIsRequired("Balance value is required!");
+        }
+        if (value.signum() == -1) {
+            final var max = accountBalance.plus().add(creditLimit);
+            if (max.plus().add(value).signum() < 0) {
+                throw LimitException.accountLimitInsufficient("The customer account doesn't has limit to this transaction!");
+            }
+        }
+
+        accountBalance = accountBalance.plus().add(value);
     }
 
 
@@ -95,6 +108,13 @@ public class Account implements Serializable {
         return transactions;
     }
 
+    public BigDecimal getCreditLimit() {
+        return creditLimit;
+    }
+
+    protected void setCreditLimit(BigDecimal creditLimit) {
+        this.creditLimit = creditLimit;
+    }
 
     protected void setId(UUID id) {
         this.id = id;
@@ -130,14 +150,6 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", agency='" + agency + '\'' +
-                ", accountNumber='" + accountNumber + '\'' +
-                ", codeBank='" + codeBank + '\'' +
-                ", customer=" + customer +
-                ", accountBalance=" + accountBalance +
-                ", createAt=" + createAt +
-                '}';
+        return "Account{" + "id=" + id + ", agency='" + agency + '\'' + ", accountNumber='" + accountNumber + '\'' + ", codeBank='" + codeBank + '\'' + ", customer=" + customer + ", accountBalance=" + accountBalance + ", createAt=" + createAt + '}';
     }
 }
