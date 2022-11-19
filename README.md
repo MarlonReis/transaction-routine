@@ -82,7 +82,8 @@ curl --location --request POST 'http://localhost:8080/v1/accounts' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "fullName":"{NOME DO CLIENTE}",
-    "documentCpf":"{DOCUMENTO CPF COM OU SEM FORMATAÇÃO}"
+    "documentCpf":"{DOCUMENTO CPF COM OU SEM FORMATAÇÃO}",
+    "creditLimit": {VALOR POSITIVO}
 }'
 ```
 
@@ -119,6 +120,7 @@ Status code 422
 | Documento invalido                        | DOCUMENT_IS_INVALID                       | 422    |
 | Atributo obrigatório não enviado          | INVALID_REQUEST                           | 400    |
 | Erro interno do servidor                  | INTERNAL_ERROR_SERVER                     | 500    |
+| Limite de credito não pode ser negativo   | CREDIT_LIMIT_CANNOT_BE_NEGATIVE           | 422    |
 
 
 #### BUSCA DADOS DA CONTA POR ID

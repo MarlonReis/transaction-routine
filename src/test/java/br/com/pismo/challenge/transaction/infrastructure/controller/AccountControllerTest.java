@@ -165,7 +165,9 @@ class AccountControllerTest {
     @DisplayName("should return 422 when identity is invalid")
     void shouldReturn422WhenNotFoundAccountById() throws Exception {
         mockMvc.perform(get("/v1/accounts/{accountId}", "96579a4e-a4e3-470a-bd7e")
-                        .contentType(APPLICATION_JSON).accept(APPLICATION_JSON))
+                        .header("correlation-id", UUID.randomUUID().toString())
+                        .contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.code").value(TypException.IDENTITY_VALUE_IS_INVALID.toString()))
                 .andExpect(jsonPath("$.message").value(Matchers.notNullValue()))
@@ -196,6 +198,7 @@ class AccountControllerTest {
                 "855.763.340-86", null);
 
         mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
+                        .header("correlation-id", UUID.randomUUID().toString())
                         .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value(TypException.INVALID_REQUEST.toString()))
@@ -209,8 +212,11 @@ class AccountControllerTest {
         final var body = new CreateAccountInputBoundary("Bertana de Tals",
                 "855.763.340-86", new BigDecimal(-1000));
 
-        mockMvc.perform(post("/v1/accounts").contentType(APPLICATION_JSON)
-                        .accept(APPLICATION_JSON).content(mapper.writeValueAsString(body)))
+        mockMvc.perform(post("/v1/accounts")
+                        .contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON)
+                        .header("correlation-id", UUID.randomUUID().toString())
+                        .content(mapper.writeValueAsString(body)))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.code").value(TypException.CREDIT_LIMIT_CANNOT_BE_NEGATIVE.toString()))
                 .andExpect(jsonPath("$.message").value(Matchers.notNullValue()))

@@ -21,9 +21,8 @@ public class TransactionController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> saveTransaction(@Valid @RequestBody SaveTransactionInputBoundary data) {
+    public void saveTransaction(@Valid @RequestBody SaveTransactionInputBoundary data) {
         transactionService.saveTransaction(data);
-        return ResponseEntity.ok().build();
     }
 
 }
