@@ -202,6 +202,7 @@ Status code 422
 | Recebe valor invalido para operação de saque                 | WITHDRAW_MONEY_RECEIVED_INVALID_VALUE      | 422    |
 | Recebe valor invalido para operação de pagamento             | PAYMENT_RECEIVED_INVALID_VALUE             | 422    |
 | Operação descronhecida                                       | UNKNOWN_TRANSACTION                        | 422    |
+| Quando a conta não possui saldo nem credito o suficiente     | ACCOUNT_LIMIT_IS_INSUFFICIENT              | 422    |
 
 #### SAÚDE DA APLICAÇÃO
 
